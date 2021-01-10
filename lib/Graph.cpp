@@ -81,27 +81,30 @@ int AbstractGraph::getVertexDegree(int v) {
     return this->getVertexDegreeAt(this->getVertexIndex(v));
 }
 
-std::vector<int> AbstractGraph::depthFirstSearch(int v) {
+std::vector<int> *AbstractGraph::depthFirstSearch(int v) {
     bool *visited = new bool[this->numberOfVertices]();
+    auto result = this->depthFirstSearchInternal(this->getVertexIndex(v), visited);
+    delete[] visited;
 
-    return this->depthFirstSearchInternal(this->getVertexIndex(v), visited);
+    return result;
 }
 
-std::vector<int> AbstractGraph::depthFirstSearchInternal(int i, bool *visited) {
+std::vector<int> *AbstractGraph::depthFirstSearchInternal(int i, bool *visited) {
     visited[i] = true;
 
-    std::vector<int> result;
-    result.push_back(i + 1);
+    auto result = new std::vector<int>();
+    result->push_back(i + 1);
 
     for (int j = 0; j < this->numberOfVertices; ++j) {
         if (visited[j]) {
             continue;
         }
         if (this->getElement(i, j)->hasValue()) {
-            std::vector<int> nestedResult = this->depthFirstSearchInternal(j, visited);
-            for (int vertex : nestedResult) {
-                result.push_back(vertex);
+            auto nestedResult = this->depthFirstSearchInternal(j, visited);
+            for (int &vertex : *nestedResult) {
+                result->push_back(vertex);
             }
+            delete nestedResult;
         }
     }
 

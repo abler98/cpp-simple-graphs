@@ -6,7 +6,7 @@
 
 
 namespace ExampleUtils {
-    std::string intVectorToString(std::vector<int> vector);
+    std::string intVectorToString(std::vector<int> *vector);
 }
 
 

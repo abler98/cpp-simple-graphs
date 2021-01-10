@@ -12,7 +12,7 @@ public:
     virtual int getNumberOfIsolatedVertices() = 0;
     virtual void addEdge(int start, int end) = 0;
     virtual int getVertexDegree(int v) = 0;
-    virtual std::vector<int> depthFirstSearch(int v) = 0;
+    virtual std::vector<int> *depthFirstSearch(int v) = 0;
 };
 
 
@@ -30,7 +30,7 @@ protected:
     Element *getElement(int i, int j);
     [[nodiscard]] inline int getVertexIndex(int v) const;
     int getVertexDegreeAt(int i);
-    std::vector<int> depthFirstSearchInternal(int i, bool *visited);
+    std::vector<int> *depthFirstSearchInternal(int i, bool *visited);
 
 public:
     ~AbstractGraph();
@@ -38,7 +38,7 @@ public:
     int getNumberOfVertices() override;
     int getNumberOfIsolatedVertices() override;
     int getVertexDegree(int v) override;
-    std::vector<int> depthFirstSearch(int v) override;
+    std::vector<int> *depthFirstSearch(int v) override;
 };
 
 
