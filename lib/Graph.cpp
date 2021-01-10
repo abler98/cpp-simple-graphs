@@ -1,12 +1,13 @@
 #include <stdexcept>
+#include <stack>
 #include "options.h"
 #include "Graph.h"
 
 //region AbstractGraph
 AbstractGraph::AbstractGraph(int numberOfVertices) {
     this->numberOfVertices = numberOfVertices;
-    this->vertices = new Vertex[numberOfVertices];
-    this->adjacencyMatrix = new Element[numberOfVertices * numberOfVertices];
+    this->vertices = new Vertex[numberOfVertices]();
+    this->adjacencyMatrix = new Element[numberOfVertices * numberOfVertices]();
 }
 
 AbstractGraph::~AbstractGraph() {
@@ -14,7 +15,7 @@ AbstractGraph::~AbstractGraph() {
     delete[] this->adjacencyMatrix;
 }
 
-Vertex *AbstractGraph::getVertex(int v) {
+[[maybe_unused]] Vertex *AbstractGraph::getVertex(int v) {
     return &this->vertices[this->getVertexIndex(v)];
 }
 
@@ -42,7 +43,12 @@ int AbstractGraph::getVertexDegreeAt(int i) {
 
     for (int j = 0; j < this->numberOfVertices; ++j) {
         if (this->getElement(i, j)->hasValue()) {
-            ++result;
+            if (i == j) {
+                result += 2;
+                continue;
+            } else {
+                ++result;
+            }
         }
         if (this->getElement(j, i)->hasValue()) {
             ++result;
@@ -73,6 +79,33 @@ int AbstractGraph::getNumberOfIsolatedVertices() {
 
 int AbstractGraph::getVertexDegree(int v) {
     return this->getVertexDegreeAt(this->getVertexIndex(v));
+}
+
+std::vector<int> AbstractGraph::depthFirstSearch(int v) {
+    bool *visited = new bool[this->numberOfVertices]();
+
+    return this->depthFirstSearchInternal(this->getVertexIndex(v), visited);
+}
+
+std::vector<int> AbstractGraph::depthFirstSearchInternal(int i, bool *visited) {
+    visited[i] = true;
+
+    std::vector<int> result;
+    result.push_back(i + 1);
+
+    for (int j = 0; j < this->numberOfVertices; ++j) {
+        if (visited[j]) {
+            continue;
+        }
+        if (this->getElement(i, j)->hasValue()) {
+            std::vector<int> nestedResult = this->depthFirstSearchInternal(j, visited);
+            for (int vertex : nestedResult) {
+                result.push_back(vertex);
+            }
+        }
+    }
+
+    return result;
 }
 //endregion
 
