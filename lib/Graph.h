@@ -24,7 +24,10 @@ protected:
     explicit AbstractGraph(int numberOfVertices);
 
     Vertex *getVertex(int v);
+    Vertex *getVertexAt(int i);
     Element *getElement(int i, int j);
+    [[nodiscard]] inline int getVertexIndex(int v) const;
+    int getVertexDegreeAt(int i);
 
 public:
     ~AbstractGraph();

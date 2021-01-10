@@ -10,23 +10,49 @@ AbstractGraph::AbstractGraph(int numberOfVertices) {
 }
 
 AbstractGraph::~AbstractGraph() {
+    delete[] this->vertices;
     delete[] this->adjacencyMatrix;
 }
 
 Vertex *AbstractGraph::getVertex(int v) {
-    if (v < 0 || v >= this->numberOfVertices) {
-        throw std::out_of_range("Out of range error");
-    }
+    return &this->vertices[this->getVertexIndex(v)];
+}
 
-    return &this->vertices[v];
+Vertex *AbstractGraph::getVertexAt(int i) {
+    return &this->vertices[i];
 }
 
 Element *AbstractGraph::getElement(int i, int j) {
-    if (i < 0 || i >= this->numberOfVertices || j < 0 || j >= this->numberOfVertices) {
-        throw std::out_of_range("Adjacency matrix out of range error");
+    return &this->adjacencyMatrix[j * this->numberOfVertices + i];
+}
+
+int AbstractGraph::getVertexIndex(int v) const {
+    int index = v - 1;
+
+    if (index < 0 || index >= this->numberOfVertices) {
+        throw std::out_of_range("Vertex out of range error");
     }
 
-    return &this->adjacencyMatrix[j * this->numberOfVertices + i];
+    return index;
+}
+
+int AbstractGraph::getVertexDegreeAt(int i) {
+#ifdef SIMPLE_GRAPHS_OPT_COMPUTE_VERTEX_DEGREE
+    int result = 0;
+
+    for (int j = 0; j < this->numberOfVertices; ++j) {
+        if (this->getElement(i, j)->hasValue()) {
+            ++result;
+        }
+        if (this->getElement(j, i)->hasValue()) {
+            ++result;
+        }
+    }
+
+    return result;
+#else
+    return this->getVertexAt(i)->degree;
+#endif
 }
 
 int AbstractGraph::getNumberOfVertices() {
@@ -37,7 +63,7 @@ int AbstractGraph::getNumberOfIsolatedVertices() {
     int result = 0;
 
     for (int i = 0; i < this->numberOfVertices; ++i) {
-        if (this->getVertexDegree(i) == 0) {
+        if (this->getVertexDegreeAt(i) == 0) {
             result++;
         }
     }
@@ -46,33 +72,21 @@ int AbstractGraph::getNumberOfIsolatedVertices() {
 }
 
 int AbstractGraph::getVertexDegree(int v) {
-#ifdef SIMPLE_GRAPHS_OPT_COMPUTE_VERTEX_DEGREE
-    int result = 0;
-
-    for (int i = 0; i < this->numberOfVertices; ++i) {
-        if (this->getElement(v, i)->hasValue()) {
-            ++result;
-        }
-        if (this->getElement(i, v)->hasValue()) {
-            ++result;
-        }
-    }
-
-    return result;
-#else
-    return this->getVertex(v)->degree;
-#endif
+    return this->getVertexDegreeAt(this->getVertexIndex(v));
 }
 //endregion
 
 
 //region DirectedGraph
 void DirectedGraph::addEdge(int start, int end) {
-    *this->getElement(start - 1, end - 1) = 1;
+    int startIndex = this->getVertexIndex(start);
+    int endIndex = this->getVertexIndex(end);
+
+    *this->getElement(startIndex, endIndex) = 1;
 
 #ifndef SIMPLE_GRAPHS_OPT_COMPUTE_VERTEX_DEGREE
-    this->getVertex(start)->degree += 1;
-    this->getVertex(end)->degree += 1;
+    this->getVertexAt(startIndex)->degree += 1;
+    this->getVertexAt(endIndex)->degree += 1;
 #endif
 }
 //endregion
@@ -80,15 +94,18 @@ void DirectedGraph::addEdge(int start, int end) {
 
 //region UndirectedGraph
 void UndirectedGraph::addEdge(int start, int end) {
-    *this->getElement(start - 1, end - 1) = 1;
+    int startIndex = this->getVertexIndex(start);
+    int endIndex = this->getVertexIndex(end);
+
+    *this->getElement(startIndex, endIndex) = 1;
 
     if (start != end) {
-        *this->getElement(end - 1, start - 1) = 1;
+        *this->getElement(endIndex, startIndex) = 1;
     }
 
 #ifndef SIMPLE_GRAPHS_OPT_COMPUTE_VERTEX_DEGREE
-    this->getVertex(start)->degree += 1;
-    this->getVertex(end)->degree += 1;
+    this->getVertexAt(startIndex)->degree += 1;
+    this->getVertexAt(endIndex)->degree += 1;
 #endif
 }
 //endregion
