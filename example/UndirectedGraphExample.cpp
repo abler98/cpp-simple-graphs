@@ -10,4 +10,6 @@ void UndirectedGraphExample::run() {
     std::cout << "Number of vertices: " << graph->getNumberOfVertices() << std::endl;
     std::cout << "Number of isolated vertices: " << graph->getNumberOfIsolatedVertices() << std::endl;
     std::cout << "<<< END UNDIRECTED GRAPH EXAMPLE:" << std::endl << std::endl;
+
+    delete graph;
 }
