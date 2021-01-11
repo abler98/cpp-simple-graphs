@@ -26,9 +26,9 @@ protected:
     explicit AbstractGraph(int numberOfVertices);
 
     [[maybe_unused]] Vertex *getVertex(int v);
-    Vertex *getVertexAt(int i);
+    [[maybe_unused]] Vertex *getVertexAt(int i);
     Element *getElement(int i, int j);
-    [[nodiscard]] inline int getVertexIndex(int v) const;
+    [[nodiscard]] int getVertexIndex(int v) const;
     int getVertexDegreeAt(int i);
     std::vector<int> *depthFirstSearchInternal(int i, bool *visited);
 

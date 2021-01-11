@@ -1,5 +1,4 @@
 #include <stdexcept>
-#include <stack>
 #include "options.h"
 #include "Graph.h"
 
@@ -15,19 +14,19 @@ AbstractGraph::~AbstractGraph() {
     delete[] this->adjacencyMatrix;
 }
 
-[[maybe_unused]] Vertex *AbstractGraph::getVertex(int v) {
+[[maybe_unused]] inline Vertex *AbstractGraph::getVertex(int v) {
     return &this->vertices[this->getVertexIndex(v)];
 }
 
-Vertex *AbstractGraph::getVertexAt(int i) {
+inline Vertex *AbstractGraph::getVertexAt(int i) {
     return &this->vertices[i];
 }
 
-Element *AbstractGraph::getElement(int i, int j) {
+inline Element *AbstractGraph::getElement(int i, int j) {
     return &this->adjacencyMatrix[j * this->numberOfVertices + i];
 }
 
-int AbstractGraph::getVertexIndex(int v) const {
+inline int AbstractGraph::getVertexIndex(int v) const {
     int index = v - 1;
 
     if (index < 0 || index >= this->numberOfVertices) {
