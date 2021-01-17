@@ -1,8 +1,0 @@
-#ifndef SIMPLE_GRAPHS_DIRECTEDGRAPHEXAMPLE_H
-#define SIMPLE_GRAPHS_DIRECTEDGRAPHEXAMPLE_H
-
-namespace DirectedGraphExample {
-    void run();
-}
-
-#endif //SIMPLE_GRAPHS_DIRECTEDGRAPHEXAMPLE_H

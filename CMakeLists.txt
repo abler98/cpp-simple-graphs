@@ -6,12 +6,13 @@ set(CMAKE_CXX_STANDARD 20)
 add_executable(
         simple_graphs
         main.cpp
-        example/ExampleUtils.cpp
-        example/ExampleUtils.h
-        example/DirectedGraphExample.cpp
-        example/DirectedGraphExample.h
-        example/UndirectedGraphExample.cpp
-        example/UndirectedGraphExample.h
+        example/example_options.h
+        example/example_utils.cpp
+        example/example_utils.h
+        example/directed_graph_example.cpp
+        example/directed_graph_example.h
+        example/undirected_graph_example.cpp
+        example/undirected_graph_example.h
         lib/Graph.cpp
         lib/Graph.h
         lib/Element.cpp
