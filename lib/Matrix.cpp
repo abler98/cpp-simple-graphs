@@ -36,7 +36,7 @@ int *Matrix::getValue(int rowNumber, int columnNumber) const {
         throw std::out_of_range("Out of range error");
     }
 
-    return &this->values[rowNumber * this->numberOfRows + columnNumber];
+    return &this->values[columnNumber * this->numberOfRows + rowNumber];
 }
 
 MatrixRow Matrix::operator[](int rowNumber) {
