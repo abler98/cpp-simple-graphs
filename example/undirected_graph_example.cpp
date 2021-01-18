@@ -11,7 +11,8 @@ void undirected_graph_example::run(std::ostream &out) {
     out << ">>> UNDIRECTED GRAPH EXAMPLE:\n\n";
 
     out << "Number of vertices: " << graph->getNumberOfVertices() << '\n';
-    out << "Number of isolated vertices: " << graph->getNumberOfIsolatedVertices() << "\n\n";
+    out << "Number of isolated vertices: " << graph->getNumberOfIsolatedVertices() << '\n';
+    out << "Number of edges: " << graph->getNumberOfEdges() << "\n\n";
 
     auto adjacency_matrix = graph->createAdjacencyMatrix();
     auto incidence_matrix = graph->createIncidenceMatrix();

@@ -21,7 +21,8 @@ void directed_graph_example::run(std::ostream &out) {
     out << ">>> DIRECTED GRAPH EXAMPLE:\n\n";
 
     out << "Number of vertices: " << graph->getNumberOfVertices() << '\n';
-    out << "Number of isolated vertices: " << graph->getNumberOfIsolatedVertices() << "\n\n";
+    out << "Number of isolated vertices: " << graph->getNumberOfIsolatedVertices() << '\n';
+    out << "Number of edges: " << graph->getNumberOfEdges() << "\n\n";
 
     out << "Vertex degree [1]: " << graph->getVertexDegree(1) << '\n';
     out << "Vertex degree [7]: " << graph->getVertexDegree(7) << '\n';

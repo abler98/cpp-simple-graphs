@@ -1,5 +1,6 @@
 #include <vector>
 #include "Element.h"
+#include "options.h"
 #include "Vertex.h"
 #include "Matrix.h"
 
@@ -27,6 +28,10 @@ private:
     Element *adjacencyMatrix;
 
 protected:
+#ifndef SIMPLE_GRAPHS_OPT_COMPUTE_NUMBER_OF_EDGES
+    int numberOfEdges = 0;
+#endif
+
     explicit AbstractGraph(int numberOfVertices);
 
     [[maybe_unused]] Vertex *getVertex(int v);

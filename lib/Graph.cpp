@@ -137,16 +137,26 @@ Matrix *AbstractGraph::createAdjacencyMatrix() {
 void DirectedGraph::addEdge(int start, int end) {
     int startIndex = this->getVertexIndex(start);
     int endIndex = this->getVertexIndex(end);
+    auto element = this->getElement(startIndex, endIndex);
 
-    *this->getElement(startIndex, endIndex) = 1;
+    if (element->hasValue()) {
+        return;
+    }
+
+    *element = 1;
 
 #ifndef SIMPLE_GRAPHS_OPT_COMPUTE_VERTEX_DEGREE
     this->getVertexAt(startIndex)->degree += 1;
     this->getVertexAt(endIndex)->degree += 1;
 #endif
+
+#ifndef SIMPLE_GRAPHS_OPT_COMPUTE_NUMBER_OF_EDGES
+    ++this->numberOfEdges;
+#endif
 }
 
 int DirectedGraph::getNumberOfEdges() {
+#ifdef SIMPLE_GRAPHS_OPT_COMPUTE_NUMBER_OF_EDGES
     int result = 0;
 
     for (int i = 0; i < this->getNumberOfVertices(); ++i) {
@@ -158,6 +168,9 @@ int DirectedGraph::getNumberOfEdges() {
     }
 
     return result;
+#else
+    return this->numberOfEdges;
+#endif
 }
 
 Matrix *DirectedGraph::createIncidenceMatrix() {
@@ -191,8 +204,13 @@ Matrix *DirectedGraph::createIncidenceMatrix() {
 void UndirectedGraph::addEdge(int start, int end) {
     int startIndex = this->getVertexIndex(start);
     int endIndex = this->getVertexIndex(end);
+    auto element = this->getElement(startIndex, endIndex);
 
-    *this->getElement(startIndex, endIndex) = 1;
+    if (element->hasValue()) {
+        return;
+    }
+
+    *element = 1;
 
     if (start != end) {
         *this->getElement(endIndex, startIndex) = 1;
@@ -202,9 +220,14 @@ void UndirectedGraph::addEdge(int start, int end) {
     this->getVertexAt(startIndex)->degree += 1;
     this->getVertexAt(endIndex)->degree += 1;
 #endif
+
+#ifndef SIMPLE_GRAPHS_OPT_COMPUTE_NUMBER_OF_EDGES
+    ++this->numberOfEdges;
+#endif
 }
 
 int UndirectedGraph::getNumberOfEdges() {
+#ifdef SIMPLE_GRAPHS_OPT_COMPUTE_NUMBER_OF_EDGES
     int result = 0;
 
     for (int i = 0; i < this->getNumberOfVertices(); ++i) {
@@ -216,6 +239,9 @@ int UndirectedGraph::getNumberOfEdges() {
     }
 
     return result;
+#else
+    return this->numberOfEdges;
+#endif
 }
 
 Matrix *UndirectedGraph::createIncidenceMatrix() {
