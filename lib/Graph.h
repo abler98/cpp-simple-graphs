@@ -1,6 +1,7 @@
 #include <vector>
 #include "Element.h"
 #include "Vertex.h"
+#include "Matrix.h"
 
 #ifndef SIMPLE_GRAPHS_GRAPH_H
 #define SIMPLE_GRAPHS_GRAPH_H
@@ -10,9 +11,12 @@ class Graph {
 public:
     virtual int getNumberOfVertices() = 0;
     virtual int getNumberOfIsolatedVertices() = 0;
+    virtual int getNumberOfEdges() = 0;
     virtual void addEdge(int start, int end) = 0;
     virtual int getVertexDegree(int v) = 0;
     virtual std::vector<int> *depthFirstSearch(int v) = 0;
+    virtual Matrix *createAdjacencyMatrix() = 0;
+    virtual Matrix *createIncidenceMatrix() = 0;
 };
 
 
@@ -39,6 +43,7 @@ public:
     int getNumberOfIsolatedVertices() override;
     int getVertexDegree(int v) override;
     std::vector<int> *depthFirstSearch(int v) override;
+    Matrix *createAdjacencyMatrix() override;
 };
 
 
@@ -47,6 +52,8 @@ public:
     explicit DirectedGraph(int numberOfVertices) : AbstractGraph(numberOfVertices) {}
 
     void addEdge(int start, int end) override;
+    int getNumberOfEdges() override;
+    Matrix *createIncidenceMatrix() override;
 };
 
 
@@ -55,6 +62,8 @@ public:
     explicit UndirectedGraph(int numberOfVertices) : AbstractGraph(numberOfVertices) {}
 
     void addEdge(int start, int end) override;
+    int getNumberOfEdges() override;
+    Matrix *createIncidenceMatrix() override;
 };
 
 

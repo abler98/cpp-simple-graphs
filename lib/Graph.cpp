@@ -109,6 +109,22 @@ std::vector<int> *AbstractGraph::depthFirstSearchInternal(int i, bool *visited) 
 
     return result;
 }
+
+Matrix *AbstractGraph::createAdjacencyMatrix() {
+    auto getVertexLabel = [](int i) {
+        return "V" + std::to_string(i + 1);
+    };
+
+    auto matrix = new Matrix(this->numberOfVertices, this->numberOfVertices, getVertexLabel, getVertexLabel);
+
+    for (int i = 0; i < this->numberOfVertices; ++i) {
+        for (int j = 0; j < this->numberOfVertices; ++j) {
+            *(*matrix)[i][j] = this->getElement(i, j)->getValue();
+        }
+    }
+
+    return matrix;
+}
 //endregion
 
 
@@ -123,6 +139,53 @@ void DirectedGraph::addEdge(int start, int end) {
     this->getVertexAt(startIndex)->degree += 1;
     this->getVertexAt(endIndex)->degree += 1;
 #endif
+}
+
+int DirectedGraph::getNumberOfEdges() {
+    int result = 0;
+
+    for (int i = 0; i < this->getNumberOfVertices(); ++i) {
+        for (int j = 0; j < this->getNumberOfVertices(); ++j) {
+            if (this->getElement(i, j)->hasValue()) {
+                ++result;
+            }
+        }
+    }
+
+    return result;
+}
+
+Matrix *DirectedGraph::createIncidenceMatrix() {
+    auto getVertexLabel = [](int i) {
+        return "V" + std::to_string(i + 1);
+    };
+
+    auto getEdgeLabel = [](int i) {
+        return "E" + std::to_string(i + 1);
+    };
+
+    int numberOfVertices = this->getNumberOfVertices();
+    int numberOfEdges = this->getNumberOfEdges();
+
+    auto matrix = new Matrix(numberOfVertices, numberOfEdges, getVertexLabel, getEdgeLabel);
+
+    int e = 0;
+
+    for (int i = 0; i < numberOfVertices; ++i) {
+        for (int j = 0; j < numberOfVertices; ++j) {
+            if (this->getElement(i, j)->hasValue()) {
+                if (i == j) {
+                    *(*matrix)[i][e] = 1;
+                } else {
+                    *(*matrix)[i][e] = 1;
+                    *(*matrix)[j][e] = -1;
+                }
+                ++e;
+            }
+        }
+    }
+
+    return matrix;
 }
 //endregion
 
@@ -142,5 +205,52 @@ void UndirectedGraph::addEdge(int start, int end) {
     this->getVertexAt(startIndex)->degree += 1;
     this->getVertexAt(endIndex)->degree += 1;
 #endif
+}
+
+int UndirectedGraph::getNumberOfEdges() {
+    int result = 0;
+
+    for (int i = 0; i < this->getNumberOfVertices(); ++i) {
+        for (int j = i; j < this->getNumberOfVertices(); ++j) {
+            if (this->getElement(i, j)->hasValue()) {
+                ++result;
+            }
+        }
+    }
+
+    return result;
+}
+
+Matrix *UndirectedGraph::createIncidenceMatrix() {
+    auto getVertexLabel = [](int i) {
+        return "V" + std::to_string(i + 1);
+    };
+
+    auto getEdgeLabel = [](int i) {
+        return "E" + std::to_string(i + 1);
+    };
+
+    int numberOfVertices = this->getNumberOfVertices();
+    int numberOfEdges = this->getNumberOfEdges();
+
+    auto matrix = new Matrix(numberOfVertices, numberOfEdges, getVertexLabel, getEdgeLabel);
+
+    int e = 0;
+
+    for (int i = 0; i < numberOfVertices; ++i) {
+        for (int j = i; j < numberOfVertices; ++j) {
+            if (this->getElement(i, j)->hasValue()) {
+                if (i == j) {
+                    *(*matrix)[i][e] = 1;
+                } else {
+                    *(*matrix)[i][e] = 1;
+                    *(*matrix)[j][e] = 1;
+                }
+                ++e;
+            }
+        }
+    }
+
+    return matrix;
 }
 //endregion

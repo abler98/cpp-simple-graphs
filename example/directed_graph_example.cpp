@@ -18,14 +18,14 @@ void directed_graph_example::run(std::ostream &out) {
     graph->addEdge(8, 6);
     graph->addEdge(8, 7);
 
-    out << ">>> DIRECTED GRAPH EXAMPLE:" << std::endl;
+    out << ">>> DIRECTED GRAPH EXAMPLE:\n\n";
 
     out << "Number of vertices: " << graph->getNumberOfVertices() << '\n';
-    out << "Number of isolated vertices: " << graph->getNumberOfIsolatedVertices() << '\n';
+    out << "Number of isolated vertices: " << graph->getNumberOfIsolatedVertices() << "\n\n";
 
     out << "Vertex degree [1]: " << graph->getVertexDegree(1) << '\n';
     out << "Vertex degree [7]: " << graph->getVertexDegree(7) << '\n';
-    out << "Vertex degree [9]: " << graph->getVertexDegree(9) << '\n';
+    out << "Vertex degree [9]: " << graph->getVertexDegree(9) << "\n\n";
 
     auto dfs1 = graph->depthFirstSearch(1);
     auto dfs7 = graph->depthFirstSearch(7);
@@ -33,11 +33,27 @@ void directed_graph_example::run(std::ostream &out) {
 
     out << "Depth-first search [1]: " << example_utils::int_vector_to_string(dfs1) << '\n';
     out << "Depth-first search [7]: " << example_utils::int_vector_to_string(dfs7) << '\n';
-    out << "Depth-first search [9]: " << example_utils::int_vector_to_string(dfs9) << '\n';
+    out << "Depth-first search [9]: " << example_utils::int_vector_to_string(dfs9) << "\n\n";
 
     delete dfs1;
     delete dfs7;
     delete dfs9;
+
+    auto adjacencyMatrix = graph->createAdjacencyMatrix();
+
+    out << "Adjacency matrix:\n";
+    example_utils::print_matrix(adjacencyMatrix, out);
+    out << '\n';
+
+    delete adjacencyMatrix;
+
+    auto incidenceMatrix = graph->createIncidenceMatrix();
+
+    out << "Incidence matrix:\n";
+    example_utils::print_matrix(incidenceMatrix, out);
+    out << '\n';
+
+    delete incidenceMatrix;
 
     out << "<<< END DIRECTED GRAPH EXAMPLE;\n" << std::endl;
 

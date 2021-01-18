@@ -12,7 +12,7 @@
 
 static void read_options(example_options &options, int argc, char *argv[]);
 static void read_benchmark_options(example_options &options, int argc, char *argv[]);
-static void read_int_argument(char *arg, int *dest);
+static void read_int_argument(int &dest, char *arg);
 
 int main(int argc, char *argv[]) {
     example_options options{};
@@ -51,14 +51,14 @@ static void read_benchmark_options(example_options &options, int argc, char *arg
             options.benchmark_iters = SIMPLE_GRAPHS_EXAMPLE_DEFAULT_BENCHMARK_ITERS;
             break;
         case 3:
-            read_int_argument(argv[2], &options.benchmark_iters);
+            read_int_argument(options.benchmark_iters, argv[2]);
             break;
         default:
             throw std::invalid_argument("Invalid benchmark mode arguments");
     }
 }
 
-static void read_int_argument(char *arg, int *dest) {
+static void read_int_argument(int &dest, char *arg) {
     char *endptr;
     errno = 0;
 
@@ -68,5 +68,5 @@ static void read_int_argument(char *arg, int *dest) {
         throw std::invalid_argument("Invalid program argument");
     }
 
-    *dest = (int) val;
+    dest = (int) val;
 }

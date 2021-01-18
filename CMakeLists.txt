@@ -19,4 +19,6 @@ add_executable(
         lib/Element.h
         lib/Vertex.h
         lib/options.h
+        lib/Matrix.cpp
+        lib/Matrix.h
 )

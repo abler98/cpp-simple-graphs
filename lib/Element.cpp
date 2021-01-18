@@ -13,3 +13,7 @@ void Element::operator+=(int addValue) {
 bool Element::hasValue() const {
     return this->value > 0;
 }
+
+int Element::getValue() const {
+    return this->value;
+}

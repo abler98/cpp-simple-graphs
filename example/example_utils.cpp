@@ -1,6 +1,7 @@
 #include <string>
 #include <iostream>
 #include <ctime>
+#include <iomanip>
 #include "example_utils.h"
 
 class NullBuffer : public std::streambuf {
@@ -10,7 +11,7 @@ public:
     }
 };
 
-void example_utils::run_example(const std::string& label, example_options &options, void (*runnable)(std::ostream &)) {
+void example_utils::run_example(const std::string &label, example_options &options, void (*runnable)(std::ostream &)) {
     if (!options.benchmark_mode) {
         (*runnable)(std::cout);
         return;
@@ -28,7 +29,7 @@ void example_utils::run_example(const std::string& label, example_options &optio
         (*runnable)(null_stream);
     }
 
-    double elapsed_time = double(clock() - start_time) / CLOCKS_PER_SEC;
+    double elapsed_time = double(std::clock() - start_time) / CLOCKS_PER_SEC;
 
     std::cout << "<<< " << label << " EXAMPLE BENCHMARK: " << elapsed_time << " sec\n" << std::endl;
 }
@@ -46,4 +47,24 @@ std::string example_utils::int_vector_to_string(std::vector<int> *vector) {
     }
 
     return result;
+}
+
+void example_utils::print_matrix(Matrix *matrix, std::ostream &out) {
+    out << "   ";
+
+    for (int i = 0; i < matrix->getNumberOfColumns(); ++i) {
+        out << std::setw(4) << matrix->getColumnLabel(i);
+    }
+
+    out << '\n';
+
+    for (int i = 0; i < matrix->getNumberOfRows(); ++i) {
+        out << std::setw(3) << matrix->getRowLabel(i);
+        for (int j = 0; j < matrix->getNumberOfColumns(); ++j) {
+            out << std::setw(4) << *(*matrix)[i][j];
+        }
+        out << '\n';
+    }
+
+    out.flush();
 }
