@@ -1,3 +1,4 @@
+#include <string>
 #include <stdexcept>
 #include "Matrix.h"
 
@@ -11,11 +12,11 @@ Matrix::Matrix(int numberOfRows, int numberOfColumns) {
 Matrix::Matrix(
         int numberOfRows,
         int numberOfColumns,
-        std::string (*rowLabel)(int),
-        std::string (*columnLabel)(int)
+        std::string (*rowLabeler)(int),
+        std::string (*columnLabeler)(int)
 ) : Matrix::Matrix(numberOfRows, numberOfColumns) {
-    this->rowLabel = rowLabel;
-    this->columnLabel = columnLabel;
+    this->rowLabeler = rowLabeler;
+    this->columnLabeler = columnLabeler;
 }
 
 Matrix::~Matrix() {
@@ -43,18 +44,18 @@ MatrixRow Matrix::operator[](int rowNumber) {
 }
 
 std::string Matrix::getRowLabel(int rowNumber) {
-    if (this->rowLabel == nullptr) {
+    if (this->rowLabeler == nullptr) {
         return std::to_string(rowNumber);
     } else {
-        return (*this->rowLabel)(rowNumber);
+        return (*this->rowLabeler)(rowNumber);
     }
 }
 
 std::string Matrix::getColumnLabel(int columnNumber) {
-    if (this->columnLabel == nullptr) {
+    if (this->columnLabeler == nullptr) {
         return std::to_string(columnNumber);
     } else {
-        return (*this->columnLabel)(columnNumber);
+        return (*this->columnLabeler)(columnNumber);
     }
 }
 //endregion

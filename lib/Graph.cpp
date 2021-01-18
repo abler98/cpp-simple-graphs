@@ -1,6 +1,15 @@
+#include <string>
 #include <stdexcept>
 #include "options.h"
 #include "Graph.h"
+
+static inline std::string vertex_labeler(int i) {
+    return "V" + std::to_string(i + 1);
+}
+
+static inline std::string edge_labeler(int i) {
+    return "E" + std::to_string(i + 1);
+}
 
 //region AbstractGraph
 AbstractGraph::AbstractGraph(int numberOfVertices) {
@@ -111,11 +120,7 @@ std::vector<int> *AbstractGraph::depthFirstSearchInternal(int i, bool *visited) 
 }
 
 Matrix *AbstractGraph::createAdjacencyMatrix() {
-    auto getVertexLabel = [](int i) {
-        return "V" + std::to_string(i + 1);
-    };
-
-    auto matrix = new Matrix(this->numberOfVertices, this->numberOfVertices, getVertexLabel, getVertexLabel);
+    auto matrix = new Matrix(this->numberOfVertices, this->numberOfVertices, vertex_labeler, vertex_labeler);
 
     for (int i = 0; i < this->numberOfVertices; ++i) {
         for (int j = 0; j < this->numberOfVertices; ++j) {
@@ -156,18 +161,10 @@ int DirectedGraph::getNumberOfEdges() {
 }
 
 Matrix *DirectedGraph::createIncidenceMatrix() {
-    auto getVertexLabel = [](int i) {
-        return "V" + std::to_string(i + 1);
-    };
-
-    auto getEdgeLabel = [](int i) {
-        return "E" + std::to_string(i + 1);
-    };
-
     int numberOfVertices = this->getNumberOfVertices();
     int numberOfEdges = this->getNumberOfEdges();
 
-    auto matrix = new Matrix(numberOfVertices, numberOfEdges, getVertexLabel, getEdgeLabel);
+    auto matrix = new Matrix(numberOfVertices, numberOfEdges, vertex_labeler, edge_labeler);
 
     int e = 0;
 
@@ -222,18 +219,10 @@ int UndirectedGraph::getNumberOfEdges() {
 }
 
 Matrix *UndirectedGraph::createIncidenceMatrix() {
-    auto getVertexLabel = [](int i) {
-        return "V" + std::to_string(i + 1);
-    };
-
-    auto getEdgeLabel = [](int i) {
-        return "E" + std::to_string(i + 1);
-    };
-
     int numberOfVertices = this->getNumberOfVertices();
     int numberOfEdges = this->getNumberOfEdges();
 
-    auto matrix = new Matrix(numberOfVertices, numberOfEdges, getVertexLabel, getEdgeLabel);
+    auto matrix = new Matrix(numberOfVertices, numberOfEdges, vertex_labeler, edge_labeler);
 
     int e = 0;
 

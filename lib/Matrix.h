@@ -10,12 +10,12 @@ private:
     int numberOfRows;
     int numberOfColumns;
     int *values;
-    std::string (*rowLabel)(int) = nullptr;
-    std::string (*columnLabel)(int) = nullptr;
+    std::string (*rowLabeler)(int) = nullptr;
+    std::string (*columnLabeler)(int) = nullptr;
 
 public:
     explicit Matrix(int numberOfRows, int numberOfColumns);
-    explicit Matrix(int numberOfRows, int numberOfColumns, std::string (*rowLabel)(int), std::string (*columnLabel)(int));
+    explicit Matrix(int numberOfRows, int numberOfColumns, std::string (*rowLabeler)(int), std::string (*columnLabeler)(int));
     ~Matrix();
 
     [[nodiscard]] int getNumberOfRows() const;
