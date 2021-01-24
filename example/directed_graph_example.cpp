@@ -1,7 +1,7 @@
 #include <iostream>
+#include <graphs/Graph.h>
 #include "example_utils.h"
 #include "directed_graph_example.h"
-#include "../lib/Graph.h"
 
 void directed_graph_example::run(std::ostream &out) {
     auto graph = new DirectedGraph(10);
@@ -22,11 +22,13 @@ void directed_graph_example::run(std::ostream &out) {
 
     out << "Number of vertices: " << graph->getNumberOfVertices() << '\n';
     out << "Number of isolated vertices: " << graph->getNumberOfIsolatedVertices() << '\n';
-    out << "Number of edges: " << graph->getNumberOfEdges() << "\n\n";
+    out << "Number of edges: " << graph->getNumberOfEdges() << '\n';
+    out << '\n';
 
     out << "Vertex degree [1]: " << graph->getVertexDegree(1) << '\n';
     out << "Vertex degree [7]: " << graph->getVertexDegree(7) << '\n';
-    out << "Vertex degree [9]: " << graph->getVertexDegree(9) << "\n\n";
+    out << "Vertex degree [9]: " << graph->getVertexDegree(9) << '\n';
+    out << '\n';
 
     auto dfs1 = graph->depthFirstSearch(1);
     auto dfs7 = graph->depthFirstSearch(7);
@@ -34,7 +36,8 @@ void directed_graph_example::run(std::ostream &out) {
 
     out << "Depth-first search [1]: " << example_utils::int_vector_to_string(dfs1) << '\n';
     out << "Depth-first search [7]: " << example_utils::int_vector_to_string(dfs7) << '\n';
-    out << "Depth-first search [9]: " << example_utils::int_vector_to_string(dfs9) << "\n\n";
+    out << "Depth-first search [9]: " << example_utils::int_vector_to_string(dfs9) << '\n';
+    out << '\n';
 
     delete dfs1;
     delete dfs7;

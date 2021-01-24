@@ -1,7 +1,7 @@
 #include <string>
 #include <stdexcept>
-#include "options.h"
-#include "Graph.h"
+#include "graphs/options.h"
+#include "graphs/Graph.h"
 
 static inline std::string vertex_labeler(int i) {
     return "V" + std::to_string(i + 1);

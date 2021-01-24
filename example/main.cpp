@@ -5,10 +5,10 @@
 #include <climits>
 #include <cerrno>
 
-#include "example/example_options.h"
-#include "example/example_utils.h"
-#include "example/directed_graph_example.h"
-#include "example/undirected_graph_example.h"
+#include "example_options.h"
+#include "example_utils.h"
+#include "directed_graph_example.h"
+#include "undirected_graph_example.h"
 
 static void read_options(example_options &options, int argc, char *argv[]);
 static void read_benchmark_options(example_options &options, int argc, char *argv[]);

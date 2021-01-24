@@ -1,4 +1,4 @@
-#include "Element.h"
+#include "graphs/Element.h"
 
 Element &Element::operator=(int newValue) {
     this->value = newValue;

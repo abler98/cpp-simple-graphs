@@ -1,9 +1,8 @@
 #include <string>
 #include <vector>
 #include <iostream>
-
+#include <graphs/Matrix.h>
 #include "example_options.h"
-#include "../lib/Matrix.h"
 
 #ifndef SIMPLE_GRAPHS_EXAMPLEUTILS_H
 #define SIMPLE_GRAPHS_EXAMPLEUTILS_H

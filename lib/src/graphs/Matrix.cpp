@@ -1,6 +1,6 @@
 #include <string>
 #include <stdexcept>
-#include "Matrix.h"
+#include "graphs/Matrix.h"
 
 //region Matrix
 Matrix::Matrix(int numberOfRows, int numberOfColumns) {
